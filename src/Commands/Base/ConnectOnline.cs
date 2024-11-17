@@ -5,10 +5,12 @@ using PnP.PowerShell.Commands.Enums;
 using PnP.PowerShell.Commands.Model;
 using PnP.PowerShell.Commands.Provider;
 using PnP.PowerShell.Commands.Utilities;
+using PnP.PowerShell.Commands.Utilities.RateLimit;
 using System;
 using System.IO;
 using System.Linq;
 using System.Management.Automation;
+using System.Net.Http;
 using System.Reflection;
 using System.Security;
 using System.Security.Cryptography.X509Certificates;
@@ -474,6 +476,8 @@ namespace PnP.PowerShell.Commands.Base
                     }
                 }
             }
+
+            newConnection.Context = newConnection.Context.AddRateLimiter();
 
             if (ReturnConnection)
             {
